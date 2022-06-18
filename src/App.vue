@@ -37,11 +37,11 @@
 
         <tbody>
 
-          <tr>
+          <tr v-for="user of users" :key="user.id">
 
-            <td>brendson</td>
-            <td>brendson.example@gmail.com</td>
-            <td>(81) 98861-5976</td>
+            <td>{{ user.nome }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.telefone }}</td>
             <td>
               <button class="waves-effect btn-small blue darken-1"><i class="material-icons">create</i></button>
               <button class="waves-effect btn-small red darken-1"><i class="material-icons">delete_sweep</i></button>
@@ -59,6 +59,20 @@
 </template>
 
 <script>
+import User from "./services/users.js";
+
+export default {
+  data() {
+    return {
+      users: []
+    }
+  },
+  mounted(){
+    User.read().then(res => {
+      this.users = res.data
+    })
+  }
+}
 
 </script>
 
