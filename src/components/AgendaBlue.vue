@@ -65,7 +65,10 @@
                             >
                                 <i class="material-icons">create</i>
                             </button>
-                            <button class="waves-effect btn-small red darken-1">
+                            <button
+                                @click="delet(user)"
+                                class="waves-effect btn-small red darken-1"
+                            >
                                 <i class="material-icons">delete_sweep</i>
                             </button>
                         </td>
@@ -83,7 +86,6 @@ export default {
     data() {
         return {
             user: {
-                id: '',
                 nome: '',
                 email: '',
                 telefone: '',
@@ -101,8 +103,7 @@ export default {
         create() {
             if (!this.user.id) {
                 User.create(this.user)
-                    // eslint-disable-next-line no-unused-vars
-                    .then((res) => {
+                    .then(() => {
                         this.user = {};
                         alert('usuário registrado');
                         this.read();
@@ -113,8 +114,7 @@ export default {
                     });
             } else {
                 User.update(this.user)
-                    // eslint-disable-next-line no-unused-vars
-                    .then((res) => {
+                    .then(() => {
                         this.user = {};
                         alert('usuário atualizado');
                         this.read();
@@ -134,6 +134,17 @@ export default {
 
         update(user) {
             this.user = user;
+        },
+
+        delet(user) {
+            User.delete(user)
+                .then(() => {
+                    this.read();
+                    this.errors = {};
+                })
+                .catch((e) => {
+                    this.errors = e.response.data.errors;
+                });
         },
     },
 };

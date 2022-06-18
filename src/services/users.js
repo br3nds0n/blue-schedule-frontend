@@ -10,4 +10,7 @@ export default {
     update: (user) => {
         return http.put('user/' + user.id, user);
     },
+    delete: (user) => {
+        return http.delete('user/' + user.id);
+    }
 };
