@@ -85,16 +85,22 @@ export default {
     },
 
     mounted() {
-        User.read().then((res) => {
-            this.users = res.data;
-        });
+        this.read();
     },
 
     methods: {
         create() {
             // eslint-disable-next-line no-unused-vars
             User.create(this.user).then((res) => {
+                this.user = {};
                 alert('usuário registrado');
+                this.read();
+            });
+        },
+
+        read() {
+            User.read().then((res) => {
+                this.users = res.data;
             });
         },
     },
