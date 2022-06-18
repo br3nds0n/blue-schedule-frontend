@@ -11,6 +11,12 @@
         </div>
 
         <div class="container">
+            <ul>
+                <li v-for="(erro, index) of errors" :key="index">
+                    campo <b>{{ erro.field }}</b> - {{ erro.defaultMessage }}
+                </li>
+            </ul>
+
             <div class="formulario">
                 <form @submit.prevent="create">
                     <input type="text" placeholder="nome" v-model="user.nome" />
@@ -81,6 +87,7 @@ export default {
                 telefone: '',
             },
             users: [],
+            errors: [],
         };
     },
 
@@ -90,12 +97,17 @@ export default {
 
     methods: {
         create() {
-            // eslint-disable-next-line no-unused-vars
-            User.create(this.user).then((res) => {
-                this.user = {};
-                alert('usuário registrado');
-                this.read();
-            });
+            User.create(this.user)
+                // eslint-disable-next-line no-unused-vars
+                .then((res) => {
+                    this.user = {};
+                    alert('usuário registrado');
+                    this.read();
+                    this.errors = {};
+                })
+                .catch((e) => {
+                    this.errors = e.response.data.errors;
+                });
         },
 
         read() {
