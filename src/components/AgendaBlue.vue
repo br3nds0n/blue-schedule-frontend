@@ -137,14 +137,16 @@ export default {
         },
 
         delet(user) {
-            User.delete(user)
-                .then(() => {
-                    this.read();
-                    this.errors = {};
-                })
-                .catch((e) => {
-                    this.errors = e.response.data.errors;
-                });
+            if (confirm(`deseja deletar o usuário '${user.nome}' ?`)) {
+                User.delete(user)
+                    .then(() => {
+                        this.read();
+                        this.errors = {};
+                    })
+                    .catch((e) => {
+                        this.errors = e.response.data.errors;
+                    });
+            }
         },
     },
 };
