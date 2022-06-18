@@ -9,17 +9,19 @@
 
     <div class="container">
 
-      <form>
-
+      <form @submit.prevent="create">
+          <input type="text" placeholder="nome" v-model= "user.nome">
           <label>nome</label>
-          <input type="text" placeholder="nome">
-          <label>e-mail</label>
-          <input type="text" placeholder="e-mail">
+
+          <input type="email" placeholder="e-mail" v-model= "user.email">
+          <label for="email_inline">e-mail</label>
+          
+          <input type="text" placeholder="telefone" v-model= "user.telefone">
           <label>telefone</label>
-          <input type="text" placeholder="telefone">
 
+          <div class="submit-button">
           <button class="waves-effect waves-light btn-small">Salvar<i class="material-icons left">save</i></button>
-
+          </div>
       </form>
 
       <table>
@@ -64,18 +66,36 @@ import User from "./services/users.js";
 export default {
   data() {
     return {
+      user: {
+        nome: '',
+        email: '',
+        telefone: ''
+      },
       users: []
     }
   },
+
   mounted(){
     User.read().then(res => {
       this.users = res.data
     })
+  },
+
+  methods: {
+    create(){
+      // eslint-disable-next-line no-unused-vars
+      User.create(this.user).then(res => {
+        alert('usuário registrado')
+      })
+    }
   }
 }
 
 </script>
 
 <style>
-
+ .submit-button{
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
 </style>
