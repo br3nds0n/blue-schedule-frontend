@@ -60,6 +60,7 @@
                         <td>{{ user.telefone }}</td>
                         <td>
                             <button
+                                @click="update(user)"
                                 class="waves-effect btn-small blue darken-1"
                             >
                                 <i class="material-icons">create</i>
@@ -82,6 +83,7 @@ export default {
     data() {
         return {
             user: {
+                id: '',
                 nome: '',
                 email: '',
                 telefone: '',
@@ -97,23 +99,41 @@ export default {
 
     methods: {
         create() {
-            User.create(this.user)
-                // eslint-disable-next-line no-unused-vars
-                .then((res) => {
-                    this.user = {};
-                    alert('usuário registrado');
-                    this.read();
-                    this.errors = {};
-                })
-                .catch((e) => {
-                    this.errors = e.response.data.errors;
-                });
+            if (!this.user.id) {
+                User.create(this.user)
+                    // eslint-disable-next-line no-unused-vars
+                    .then((res) => {
+                        this.user = {};
+                        alert('usuário registrado');
+                        this.read();
+                        this.errors = {};
+                    })
+                    .catch((e) => {
+                        this.errors = e.response.data.errors;
+                    });
+            } else {
+                User.update(this.user)
+                    // eslint-disable-next-line no-unused-vars
+                    .then((res) => {
+                        this.user = {};
+                        alert('usuário atualizado');
+                        this.read();
+                        this.errors = {};
+                    })
+                    .catch((e) => {
+                        this.errors = e.response.data.errors;
+                    });
+            }
         },
 
         read() {
             User.read().then((res) => {
                 this.users = res.data;
             });
+        },
+
+        update(user) {
+            this.user = user;
         },
     },
 };
