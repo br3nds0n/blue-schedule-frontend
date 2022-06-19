@@ -17,6 +17,7 @@ Venho por meio deste repositorio entregar a aplicação `front-end` do desafio. 
      * [setup](#-setup)
      * [starting](#-starting)
    * [🌐 aplicação](#-aplicação)
+     * [deploy](#-deploy)
    * [🛠 tecnologias](#-tecnologias)
    * [✍🏼 autor](#-autor)
    * [📝 license](#-license)
@@ -70,10 +71,14 @@ $ npm run serve
 <br>
 
 ## 🌐 aplicação
+
 ![Peek 2022-06-19 12-50](https://user-images.githubusercontent.com/82064724/174489555-2eef3c16-3c6b-4a25-b593-a95753e097c2.gif)
 
 <br>
 
+## 🚀 deploy 
+> Na fase de Deploy foi utilizada a ferramenta [github-pages](https://pages.github.com/), para fazer a hospedagem do nosso `front-end`.<br>
+Acesse: https://br3nds0n.github.io/blue-schedule-frontend/
 
 ## 🛠 tecnologias
 
