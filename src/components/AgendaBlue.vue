@@ -13,76 +13,111 @@
         <div class="container">
             <ul>
                 <li v-for="(erro, index) of errors" :key="index">
-                    campo <b>{{ erro.field }}</b> - {{ erro.defaultMessage }}
+                    <span>
+                        campo <b>{{ erro.field }}</b> -
+                        {{ erro.defaultMessage }}
+                    </span>
                 </li>
             </ul>
 
-            <div class="formulario">
-                <form @submit.prevent="create">
-                    <input type="text" placeholder="nome" v-model="user.nome" />
-                    <label>nome</label>
-
-                    <input
-                        type="email"
-                        placeholder="e-mail"
-                        v-model="user.email"
-                    />
-                    <label for="email_inline">e-mail</label>
-
-                    <input
-                        type="text"
-                        placeholder="telefone"
-                        v-model="user.telefone"
-                    />
-                    <label>telefone</label>
-
-                    <div class="submit-button">
-                        <button class="waves-effect waves-light btn-small">
-                            Salvar<i class="material-icons left">save</i>
-                        </button>
-                    </div>
-                </form>
+            <div class="border">
+                <div class="form">
+                    <form @submit.prevent="create">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input
+                                    placeholder="Username"
+                                    type="text"
+                                    v-model="user.nome"
+                                />
+                                <label for="name2" class="active">Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input
+                                    id="email"
+                                    placeholder="exemple@domainname.com"
+                                    type="email"
+                                    v-model="user.email"
+                                />
+                                <label for="email" class="active">Email</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input
+                                    placeholder="(00) 00000-0000"
+                                    v-maska="'(##) #####-####'"
+                                    v-model="user.telefone"
+                                    type="tel"
+                                />
+                                <label for="tel" class="active">Telefone</label>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <button
+                                        class="btn cyan waves-effect waves-light center"
+                                        type="submit"
+                                        name="action"
+                                    >
+                                        Submit
+                                        <i class="material-icons center right"
+                                            >send</i
+                                        >
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>NOME</th>
-                        <th>E-MAIL</th>
-                        <th>TELEFONE</th>
-                        <th>OPÇÕES</th>
-                    </tr>
-                </thead>
+            <div class="table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>NOME</th>
+                            <th>E-MAIL</th>
+                            <th>TELEFONE</th>
+                            <th>OPÇÕES</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    <tr v-for="user of users" :key="user.id">
-                        <td>{{ user.nome }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.telefone }}</td>
-                        <td>
-                            <button
-                                @click="update(user)"
-                                class="waves-effect btn-small blue darken-1"
-                            >
-                                <i class="material-icons">create</i>
-                            </button>
-                            <button
-                                @click="delet(user)"
-                                class="waves-effect btn-small red darken-1"
-                            >
-                                <i class="material-icons">delete_sweep</i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                    <tbody>
+                        <tr v-for="user of users" :key="user.id">
+                            <td>{{ user.nome }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.telefone }}</td>
+                            <td>
+                                <button
+                                    @click="update(user)"
+                                    class="waves-effect btn-small blue darken-1"
+                                >
+                                    <i class="material-icons">create</i>
+                                </button>
+                                <button
+                                    @click="delet(user)"
+                                    class="waves-effect btn-small red darken-1 center"
+                                >
+                                    <i class="material-icons right"
+                                        >delete_sweep</i
+                                    >
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import User from '../services/users.js';
+import { maska } from 'maska';
 
 export default {
+    directives: { maska },
     data() {
         return {
             user: {
@@ -153,12 +188,17 @@ export default {
 </script>
 
 <style>
-.submit-button {
-    margin-top: 30px;
-    margin-bottom: 40px;
-}
-
 img {
     max-width: 64px;
+}
+
+span {
+    color: Tomato;
+}
+
+.form {
+    width: 45%;
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>
