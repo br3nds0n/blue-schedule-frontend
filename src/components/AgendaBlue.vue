@@ -6,6 +6,7 @@
                     <a href="#!" class="brand-logo">
                         <img src="../assets/logo.jpeg" />
                     </a>
+                    <a href="#" class="brand-logo center">Agenda</a>
                 </div>
             </nav>
         </div>
@@ -97,10 +98,10 @@
                                 </button>
                                 <button
                                     @click="delet(user)"
-                                    class="waves-effect btn-small red darken-1 center"
+                                    class="waves-effect btn-small red darken-1"
                                 >
-                                    <i class="material-icons right"
-                                        >delete_sweep</i
+                                    <i class="material-icons"
+                                        >delete</i
                                     >
                                 </button>
                             </td>
@@ -140,22 +141,24 @@ export default {
                 User.create(this.user)
                     .then(() => {
                         this.user = {};
-                        alert('usuário registrado');
+                        this.$swal('Sucesso', 'Usuário cadastrado!', 'success');
                         this.read();
                         this.errors = {};
                     })
                     .catch((e) => {
+                        this.$swal('Oops...', 'Algum erro aconteceu!', 'error');
                         this.errors = e.response.data.errors;
                     });
             } else {
                 User.update(this.user)
                     .then(() => {
                         this.user = {};
-                        alert('usuário atualizado');
+                        this.$swal('Sucesso', 'Usuário atualizado!', 'success');
                         this.read();
                         this.errors = {};
                     })
                     .catch((e) => {
+                        this.$swal('Oops...', 'Algum erro aconteceu!', 'error');
                         this.errors = e.response.data.errors;
                     });
             }
@@ -172,16 +175,27 @@ export default {
         },
 
         delet(user) {
-            if (confirm(`deseja deletar o usuário '${user.nome}' ?`)) {
-                User.delete(user)
-                    .then(() => {
+            this.$swal({
+                title: 'Tem certeza?',
+                text: 'Você não poderá reverter isso!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, exclua!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    User.delete(user).then(() => {
+                        this.$swal(
+                            'Sucesso',
+                            `Usuário '${user.nome}' deletado!`,
+                            'success'
+                        );
                         this.read();
                         this.errors = {};
-                    })
-                    .catch((e) => {
-                        this.errors = e.response.data.errors;
                     });
-            }
+                }
+            });
         },
     },
 };
